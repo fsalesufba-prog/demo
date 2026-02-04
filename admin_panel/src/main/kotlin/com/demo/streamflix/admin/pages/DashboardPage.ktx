@@ -20,7 +20,7 @@ val DashboardPage = FC<DashboardPageProps> {
     val apiService = ApiService()
     
     val (stats, setStats) = useState<DashboardStats?>(null)
-    val (loading, setLoading] = useState(true)
+    val (loading, setLoading) = useState(true)
     
     useEffect {
         scope.launch {

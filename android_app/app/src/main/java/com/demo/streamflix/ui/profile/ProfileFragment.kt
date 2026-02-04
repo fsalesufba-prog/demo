@@ -65,9 +65,9 @@ class ProfileFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.userProfile.collect { user ->
                 user?.let {
-                    binding.tvUserName.text = it.name
+                    binding.tvUserName.text = it.fullName
                     binding.tvUserEmail.text = it.email
-                    binding.tvUserPhone.text = it.phone
+                    binding.tvUserPhone.text = it.phone ?: "N/A"
                 }
             }
         }

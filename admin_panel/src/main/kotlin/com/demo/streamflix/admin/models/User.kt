@@ -13,8 +13,8 @@ data class User(
     val isAdmin: Boolean = false,
     val isActive: Boolean = true,
     val subscriptionEnd: Instant? = null,
-    val createdAt: Instant = Instant.now(),
-    val updatedAt: Instant = Instant.now()
+    val createdAt: Instant = Instant(),
+    val updatedAt: Instant = Instant()
 )
 
 @Serializable
