@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <!-- Splash Screen -->
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.demo.streamflix.ui.main.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Authentication -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.demo.streamflix.ui.auth.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Main Flow -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.demo.streamflix.ui.main.HomeFragment"
+        android:label="Inicio"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_nacionalFragment"
+            app:destination="@id/nacionalFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_actualidadFragment"
+            app:destination="@id/actualidadFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_infantilFragment"
+            app:destination="@id/infantilFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_regionalFragment"
+            app:destination="@id/regionalFragment" />
+        <argument
+            android:name="channel"
+            app:argType="com.demo.streamflix.data.model.Channel" />
+    </fragment>
+
+    <!-- Search -->
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.demo.streamflix.ui.search.SearchFragment"
+        android:label="Buscar"
+        tools:layout="@layout/fragment_search" />
+
+    <!-- Profile -->
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.demo.streamflix.ui.profile.ProfileFragment"
+        android:label="Mi Perfil"
+        tools:layout="@layout/fragment_profile" />
+
+    <!-- About -->
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.demo.streamflix.ui.about.AboutFragment"
+        android:label="Acerca de"
+        tools:layout="@layout/fragment_about" />
+
+    <!-- Category Fragments -->
+    <fragment
+        android:id="@+id/nacionalFragment"
+        android:name="com.demo.streamflix.ui.categories.NacionalFragment"
+        android:label="Nacional"
+        tools:layout="@layout/fragment_category" />
+
+    <fragment
+        android:id="@+id/actualidadFragment"
+        android:name="com.demo.streamflix.ui.categories.ActualidadFragment"
+        android:label="Actualidad"
+        tools:layout="@layout/fragment_category" />
+
+    <fragment
+        android:id="@+id/infantilFragment"
+        android:name="com.demo.streamflix.ui.categories.InfantilFragment"
+        android:label="Infantil"
+        tools:layout="@layout/fragment_category" />
+
+    <fragment
+        android:id="@+id/regionalFragment"
+        android:name="com.demo.streamflix.ui.categories.RegionalFragment"
+        android:label="Regional"
+        tools:layout="@layout/fragment_category" />
+
+</navigation>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Streamflix</string>
+
+    <!-- Auth -->
+    <string name="login_title">Iniciar Sesión</string>
+    <string name="hint_email">Correo electrónico</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="show_password">Mostrar contraseña</string>
+    <string name="remember_me">Recordar accesos</string>
+    <string name="btn_login">INICIAR SESIÓN</string>
+    <string name="forgot_password">¿Olvidaste la contraseña? </string>
+    <string name="recover_password">Recuperar</string>
+
+    <!-- Validation -->
+    <string name="validating_membership">Validando membresía activa</string>
+    <string name="membership_active">Membresía Activa</string>
+    <string name="membership_inactive">Membresía Inactiva</string>
+
+    <!-- Home -->
+    <string name="home">Inicio</string>
+    <string name="search">Buscar</string>
+    <string name="profile">Perfil</string>
+    <string name="about">Acerca de</string>
+
+    <!-- Categories -->
+    <string name="category_all">Todos</string>
+    <string name="category_national">Nacional</string>
+    <string name="category_current">Actualidad</string>
+    <string name="category_kids">Infantil</string>
+    <string name="category_regional">Regional</string>
+    <string name="category">Categoría</string>
+    <string name="channel_logo">Logo del canal</string>
+
+    <!-- Channel -->
+    <string name="loading_stream">Cargando transmisión...</string>
+    <string name="player_error">Error al cargar el canal</string>
+    <string name="favorite">Favorito</string>
+    <string name="fullscreen">Pantalla completa</string>
+    <string name="back">Volver</string>
+    <string name="channel_description">Descripción</string>
+    <string name="channel_hd">HD</string>
+    <string name="watch_now">Ver Ahora</string>
+    <string name="add_to_favorites">Agregar a favoritos</string>
+    <string name="remove_from_favorites">Quitar de favoritos</string>
+    <string name="clear">Limpiar</string>
+
+    <!-- Profile -->
+    <string name="my_profile">Mi perfil</string>
+    <string name="name">Nombre</string>
+    <string name="email">Email</string>
+    <string name="phone">Teléfono</string>
+    <string name="update_profile">Actualizar mis datos</string>
+    <string name="change_password">Cambiar contraseña</string>
+    <string name="logout">Cerrar sesión</string>
+
+    <!-- Messages -->
+    <string name="loading">Cargando...</string>
+    <string name="error">Error</string>
+    <string name="retry">Reintentar</string>
+    <string name="no_internet">Sin conexión a internet</string>
+</resources>

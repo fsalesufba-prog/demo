@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="#CC000000"
+    android:orientation="vertical">
+
+    <!-- Progress Bar -->
+    <com.google.android.exoplayer2.ui.DefaultTimeBar
+        android:id="@+id/exo_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        app:buffered_color="@color/gray"
+        app:played_color="@color/accent"
+        app:scrubber_color="@color/accent"
+        app:scrubber_disabled_size="0dp"
+        app:scrubber_dragged_size="16dp"
+        app:scrubber_enabled_size="12dp" />
+
+    <!-- Control Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp">
+
+        <!-- Previous Button -->
+        <ImageButton
+            android:id="@+id/exo_prev"
+            style="@style/ExoMediaButton.Previous"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:visibility="gone" />
+
+        <!-- Rewind Button -->
+        <ImageButton
+            android:id="@+id/exo_rew"
+            style="@style/ExoMediaButton.Rewind"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+
+        <!-- Play/Pause Button -->
+        <ImageButton
+            android:id="@+id/exo_play_pause"
+            style="@style/ExoMediaButton.PlayPause"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+        <!-- Fast Forward Button -->
+        <ImageButton
+            android:id="@+id/exo_ffwd"
+            style="@style/ExoMediaButton.FastForward"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+
+        <!-- Next Button -->
+        <ImageButton
+            android:id="@+id/exo_next"
+            style="@style/ExoMediaButton.Next"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:visibility="gone" />
+
+        <!-- Spacer -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Current Time -->
+        <TextView
+            android:id="@+id/exo_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="0:00"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" / "
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
+
+        <!-- Duration -->
+        <TextView
+            android:id="@+id/exo_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="0:00"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <!-- Settings Button -->
+        <ImageButton
+            android:id="@+id/exo_settings"
+            style="@style/ExoMediaButton.Settings"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:visibility="gone" />
+
+        <!-- Fullscreen Button -->
+        <ImageButton
+            android:id="@+id/exo_fullscreen"
+            style="@style/ExoMediaButton.Fullscreen"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

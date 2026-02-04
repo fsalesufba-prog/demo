@@ -1,0 +1,13 @@
+# Android SDK
+sdk.dir=/path/to/Android/sdk
+
+# API Configuration
+api.base.url=http://your-backend-url:8080/api
+api.timeout=30
+
+# Debug
+debug.logging=true
+debug.mock.api=false
+
+# Build Configuration
+build.gradle.cache.enabled=true
