@@ -1,7 +1,11 @@
 package com.demo.streamflix
 
+import com.demo.streamflix.service.CategoryService
+import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.annotation.EnableScheduling
 
 @SpringBootApplication
@@ -17,9 +21,11 @@ fun main(args: Array<String>) {
  */
 @Configuration
 class AppConfig {
-    
+
     @Bean
-    fun applicationStartupRunner(): CommandLineRunner {
+    fun applicationStartupRunner(
+        categoryService: CategoryService
+    ): CommandLineRunner {
         return CommandLineRunner {
             println("""
             ============================================
@@ -35,8 +41,15 @@ class AppConfig {
             - Swagger: http://localhost:8080/swagger-ui.html
             - Health: http://localhost:8080/api/health
             
+            Inicializando categorias padrão...
             ============================================
             """.trimIndent())
+            
+            // Inicializar categorias padrão
+            categoryService.initializeDefaultCategories()
+            
+            println("Categorias inicializadas com sucesso!")
+            println("============================================")
         }
     }
 }
