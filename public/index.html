@@ -17,6 +17,67 @@
             min-height: 100vh;
             color: #ffffff;
         }
+
+        #login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #e94560;
+            font-weight: bold;
+        }
+
+        .login-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .login-btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, background 0.2s;
+            font-size: 1rem;
+        }
+
+        .login-btn-admin {
+            background: #e94560;
+            color: white;
+        }
+
+        .login-btn-user {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        #main-content {
+            display: none;
+        }
         
         .header {
             background: rgba(0, 0, 0, 0.3);
@@ -202,145 +263,187 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">Streamflix Admin</div>
-        <nav class="nav-links">
-            <a href="#dashboard">Dashboard</a>
-            <a href="#channels">Canais</a>
-            <a href="#categories">Categorias</a>
-            <a href="#users">Usuarios</a>
-        </nav>
-        <div class="api-status">
-            <div class="status-dot" id="status-dot"></div>
-            <span id="api-status-text">Verificando...</span>
-        </div>
-    </header>
-    
-    <div class="container">
-        <h1 style="margin: 2rem 0;">Dashboard</h1>
-        
-        <div class="dashboard">
-            <div class="card">
-                <div class="card-title">Total de Canais</div>
-                <div class="card-value" id="total-channels">--</div>
-                <div class="card-subtitle">Canais de TV disponiveis</div>
+    <div id="login-page">
+        <div class="login-card">
+            <div class="logo" style="margin-bottom: 1rem; font-size: 2rem;">Streamflix</div>
+            <h2 class="login-title">Selecione seu acesso</h2>
+            <div class="login-options">
+                <button class="login-btn login-btn-admin" onclick="login('admin')">Acessar como Administrador</button>
+                <button class="login-btn login-btn-user" onclick="login('user')">Acessar como Usuário</button>
             </div>
-            <div class="card">
-                <div class="card-title">Categorias</div>
-                <div class="card-value" id="total-categories">--</div>
-                <div class="card-subtitle">Nacional, Actualidad, etc.</div>
-            </div>
-            <div class="card">
-                <div class="card-title">Usuarios Ativos</div>
-                <div class="card-value" id="total-users">--</div>
-                <div class="card-subtitle">Usuarios com assinatura</div>
-            </div>
-            <div class="card">
-                <div class="card-title">Status do Sistema</div>
-                <div class="card-value status-active" id="system-status">Online</div>
-                <div class="card-subtitle">Todos os servicos funcionando</div>
-            </div>
-        </div>
-        
-        <div class="section" id="channels">
-            <h2 class="section-title">Canais Recentes</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Numero</th>
-                        <th>Nome</th>
-                        <th>Categoria</th>
-                        <th>HD</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="channels-table">
-                    <tr>
-                        <td>001</td>
-                        <td>Willax HD</td>
-                        <td>Nacional</td>
-                        <td>Sim</td>
-                        <td class="status-active">Ativo</td>
-                    </tr>
-                    <tr>
-                        <td>002</td>
-                        <td>Latina HD</td>
-                        <td>Nacional</td>
-                        <td>Sim</td>
-                        <td class="status-active">Ativo</td>
-                    </tr>
-                    <tr>
-                        <td>003</td>
-                        <td>RPP</td>
-                        <td>Nacional</td>
-                        <td>Nao</td>
-                        <td class="status-active">Ativo</td>
-                    </tr>
-                    <tr>
-                        <td>004</td>
-                        <td>America HD</td>
-                        <td>Nacional</td>
-                        <td>Sim</td>
-                        <td class="status-active">Ativo</td>
-                    </tr>
-                    <tr>
-                        <td>005</td>
-                        <td>Panamericana HD</td>
-                        <td>Nacional</td>
-                        <td>Sim</td>
-                        <td class="status-active">Ativo</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="section" id="categories">
-            <h2 class="section-title">Categorias</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Slug</th>
-                        <th>Canais</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Nacional</td>
-                        <td>nacional</td>
-                        <td>6</td>
-                        <td class="status-active">Ativo</td>
-                    </tr>
-                    <tr>
-                        <td>Actualidad</td>
-                        <td>actualidad</td>
-                        <td>4</td>
-                        <td class="status-active">Ativo</td>
-                    </tr>
-                    <tr>
-                        <td>Infantil</td>
-                        <td>infantil</td>
-                        <td>3</td>
-                        <td class="status-active">Ativo</td>
-                    </tr>
-                    <tr>
-                        <td>Regional</td>
-                        <td>regional</td>
-                        <td>5</td>
-                        <td class="status-active">Ativo</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
-    
-    <footer class="footer">
-        <p>Streamflix Admin Panel - DEMO Version</p>
-        <p>Backend API: Spring Boot + Kotlin | Frontend: Express.js</p>
-    </footer>
+
+    <div id="main-content">
+        <header class="header">
+            <div class="logo">Streamflix <span id="user-role-tag" style="font-size: 0.8rem; background: #e94560; padding: 2px 8px; border-radius: 4px; margin-left: 8px;">Admin</span></div>
+            <nav class="nav-links">
+                <a href="#dashboard">Dashboard</a>
+                <a href="#channels">Canais</a>
+                <a href="#categories">Categorias</a>
+                <a href="#users" id="nav-users">Usuarios</a>
+                <a href="#" onclick="logout()" style="color: #f87171;">Sair</a>
+            </nav>
+            <div class="api-status">
+                <div class="status-dot" id="status-dot"></div>
+                <span id="api-status-text">Verificando...</span>
+            </div>
+        </header>
+        
+        <div class="container">
+            <h1 style="margin: 2rem 0;">Dashboard</h1>
+            
+            <div class="dashboard">
+                <div class="card">
+                    <div class="card-title">Total de Canais</div>
+                    <div class="card-value" id="total-channels">--</div>
+                    <div class="card-subtitle">Canais de TV disponiveis</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Categorias</div>
+                    <div class="card-value" id="total-categories">--</div>
+                    <div class="card-subtitle">Nacional, Actualidad, etc.</div>
+                </div>
+                <div class="card" id="card-users">
+                    <div class="card-title">Usuarios Ativos</div>
+                    <div class="card-value" id="total-users">--</div>
+                    <div class="card-subtitle">Usuarios com assinatura</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Status do Sistema</div>
+                    <div class="card-value status-active" id="system-status">Online</div>
+                    <div class="card-subtitle">Todos os servicos funcionando</div>
+                </div>
+            </div>
+            
+            <div class="section" id="channels">
+                <h2 class="section-title">Canais Recentes</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>HD</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="channels-table">
+                        <tr>
+                            <td>001</td>
+                            <td>Willax HD</td>
+                            <td>Nacional</td>
+                            <td>Sim</td>
+                            <td class="status-active">Ativo</td>
+                        </tr>
+                        <tr>
+                            <td>002</td>
+                            <td>Latina HD</td>
+                            <td>Nacional</td>
+                            <td>Sim</td>
+                            <td class="status-active">Ativo</td>
+                        </tr>
+                        <tr>
+                            <td>003</td>
+                            <td>RPP</td>
+                            <td>Nacional</td>
+                            <td>Nao</td>
+                            <td class="status-active">Ativo</td>
+                        </tr>
+                        <tr>
+                            <td>004</td>
+                            <td>America HD</td>
+                            <td>Nacional</td>
+                            <td>Sim</td>
+                            <td class="status-active">Ativo</td>
+                        </tr>
+                        <tr>
+                            <td>005</td>
+                            <td>Panamericana HD</td>
+                            <td>Nacional</td>
+                            <td>Sim</td>
+                            <td class="status-active">Ativo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section" id="categories">
+                <h2 class="section-title">Categorias</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Slug</th>
+                            <th>Canais</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nacional</td>
+                            <td>nacional</td>
+                            <td>6</td>
+                            <td class="status-active">Ativo</td>
+                        </tr>
+                        <tr>
+                            <td>Actualidad</td>
+                            <td>actualidad</td>
+                            <td>4</td>
+                            <td class="status-active">Ativo</td>
+                        </tr>
+                        <tr>
+                            <td>Infantil</td>
+                            <td>infantil</td>
+                            <td>3</td>
+                            <td class="status-active">Ativo</td>
+                        </tr>
+                        <tr>
+                            <td>Regional</td>
+                            <td>regional</td>
+                            <td>5</td>
+                            <td class="status-active">Ativo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <p>Streamflix Admin Panel - DEMO Version</p>
+            <p>Backend API: Spring Boot + Kotlin | Frontend: Express.js</p>
+        </footer>
+    </div>
     
     <script>
+        function login(role) {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            
+            const roleTag = document.getElementById('user-role-tag');
+            const navUsers = document.getElementById('nav-users');
+            const cardUsers = document.getElementById('card-users');
+            
+            if (role === 'admin') {
+                roleTag.textContent = 'Admin';
+                roleTag.style.background = '#e94560';
+                navUsers.style.display = 'block';
+                cardUsers.style.display = 'block';
+            } else {
+                roleTag.textContent = 'Usuário';
+                roleTag.style.background = '#0f3460';
+                navUsers.style.display = 'none';
+                cardUsers.style.display = 'none';
+            }
+            
+            localStorage.setItem('streamflix_role', role);
+        }
+
+        function logout() {
+            localStorage.removeItem('streamflix_role');
+            location.reload();
+        }
+
         async function checkApiStatus() {
             const statusDot = document.getElementById('status-dot');
             const statusText = document.getElementById('api-status-text');
@@ -361,6 +464,11 @@
         }
         
         document.addEventListener('DOMContentLoaded', () => {
+            const savedRole = localStorage.getItem('streamflix_role');
+            if (savedRole) {
+                login(savedRole);
+            }
+            
             checkApiStatus();
             setInterval(checkApiStatus, 30000);
             
