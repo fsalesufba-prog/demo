@@ -165,3 +165,4 @@ sonar-project.properties
 # Uploads
 uploads/
 **/uploads/
+.env
