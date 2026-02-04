@@ -266,10 +266,17 @@
     <div id="login-page">
         <div class="login-card">
             <div class="logo" style="margin-bottom: 1rem; font-size: 2rem;">Streamflix</div>
-            <h2 class="login-title">Selecione seu acesso</h2>
-            <div class="login-options">
-                <button class="login-btn login-btn-admin" onclick="login('admin')">Acessar como Administrador</button>
-                <button class="login-btn login-btn-user" onclick="login('user')">Acessar como Usuário</button>
+            <h2 class="login-title">Acesso Restrito</h2>
+            <form id="login-form" onsubmit="handleLogin(event)" class="login-options">
+                <input type="text" id="username" placeholder="Usuário" required 
+                    style="padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; margin-bottom: 0.5rem;">
+                <input type="password" id="password" placeholder="Senha" required 
+                    style="padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; margin-bottom: 1rem;">
+                <button type="submit" class="login-btn login-btn-admin">Entrar</button>
+                <div id="login-error" style="color: #f87171; font-size: 0.875rem; display: none; margin-top: 0.5rem;">Credenciais inválidas</div>
+            </form>
+            <div style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.6;">
+                Dica: admin / admin123
             </div>
         </div>
     </div>
@@ -416,6 +423,22 @@
     </div>
     
     <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const errorDiv = document.getElementById('login-error');
+
+            if (user === 'admin' && pass === 'admin123') {
+                login('admin');
+            } else if (user === 'user' && pass === 'user123') {
+                login('user');
+            } else {
+                errorDiv.style.display = 'block';
+                setTimeout(() => { errorDiv.style.display = 'none'; }, 3000);
+            }
+        }
+
         function login(role) {
             document.getElementById('login-page').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
