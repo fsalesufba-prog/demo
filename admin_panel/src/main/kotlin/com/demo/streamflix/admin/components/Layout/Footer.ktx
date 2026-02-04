@@ -1,0 +1,35 @@
+package com.demo.streamflix.admin.components.Layout
+
+import emotion.react.css
+import react.FC
+import react.Props
+import react.dom.html.ReactHTML.footer
+import react.dom.html.ReactHTML.div
+import web.cssom.*
+
+val Footer = FC<Props> {
+    footer {
+        css {
+            backgroundColor = NamedColor.white
+            borderTop = "1px solid ${Colors.borderLight}".unsafeCast<Border>()
+            padding = "16px 24px".unsafeCast<Padding>()
+            textAlign = TextAlign.center
+            color = Colors.textSecondary.toColor()
+            fontSize = 0.875.rem
+            marginTop = Margin.auto
+        }
+        
+        div {
+            +"Streamflix Admin Panel © ${js("new Date().getFullYear()")}"
+        }
+        
+        div {
+            css {
+                marginTop = 4.px
+                fontSize = 0.75.rem
+                opacity = 0.7
+            }
+            +"v1.0.0"
+        }
+    }
+}

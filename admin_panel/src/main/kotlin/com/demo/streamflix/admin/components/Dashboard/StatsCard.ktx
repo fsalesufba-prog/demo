@@ -1,0 +1,94 @@
+package com.demo.streamflix.admin.components.Dashboard
+
+import emotion.react.css
+import react.FC
+import react.Props
+import react.dom.html.ReactHTML.div
+import react.dom.html.ReactHTML.h3
+import react.dom.html.ReactHTML.p
+import web.cssom.*
+
+external interface StatsCardProps : Props {
+    var title: String
+    var value: String
+    var icon: String
+    var color: String
+    var trend: String? // "+10%", "-5%", etc.
+}
+
+val StatsCard = FC<StatsCardProps> { props ->
+    div {
+        css {
+            backgroundColor = NamedColor.white
+            borderRadius = 8.px
+            padding = 24.px
+            boxShadow = "0 2px 4px rgba(0,0,0,0.1)"
+            border = "1px solid ${Colors.borderLight}".unsafeCast<Border>()
+            height = 100.pct
+        }
+        
+        div {
+            css {
+                display = Display.flex
+                justifyContent = JustifyContent.spaceBetween
+                alignItems = AlignItems.center
+                marginBottom = 16.px
+            }
+            
+            div {
+                css {
+                    width = 48.px
+                    height = 48.px
+                    borderRadius = 12.px
+                    backgroundColor = props.color
+                    display = Display.flex
+                    justifyContent = JustifyContent.center
+                    alignItems = AlignItems.center
+                    fontSize = 1.5.rem
+                }
+                +props.icon
+            }
+            
+            if (!props.trend.isNullOrEmpty()) {
+                div {
+                    css {
+                        padding = "4px 8px".unsafeCast<Padding>()
+                        borderRadius = 12.px
+                        backgroundColor = if (props.trend!!.startsWith("+")) {
+                            "rgba(46, 125, 50, 0.1)".unsafeCast<BackgroundColor>()
+                        } else {
+                            "rgba(211, 47, 47, 0.1)".unsafeCast<BackgroundColor>()
+                        }
+                        color = if (props.trend!!.startsWith("+")) {
+                            Colors.success.toColor()
+                        } else {
+                            Colors.error.toColor()
+                        }
+                        fontSize = 0.75.rem
+                        fontWeight = FontWeight.bold
+                    }
+                    +props.trend!!
+                }
+            }
+        }
+        
+        h3 {
+            css {
+                fontSize = 2.rem
+                fontWeight = FontWeight.bold
+                margin = "0 0 8px 0".unsafeCast<Margin>()
+                color = Colors.textPrimary.toColor()
+            }
+            +props.value
+        }
+        
+        p {
+            css {
+                margin = 0.px
+                color = Colors.textSecondary.toColor()
+                fontSize = 0.875.rem
+            }
+            +props.title
+        }
+    }
+}

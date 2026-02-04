@@ -1,0 +1,79 @@
+package com.demo.streamflix.admin.components.Common
+
+import emotion.react.css
+import react.ChildrenBuilder
+import react.FC
+import react.Props
+import react.dom.html.ButtonType
+import react.dom.html.ReactHTML.button
+import web.cssom.*
+
+external interface ButtonProps : Props {
+    var onClick: (() -> Unit)?
+    var disabled: Boolean?
+    var variant: String? // "primary", "secondary", "outlined"
+    var size: String? // "small", "medium", "large"
+    var fullWidth: Boolean?
+    var type: ButtonType?
+    var children: react.ReactNode
+}
+
+val Button = FC<ButtonProps> { props ->
+    button {
+        type = props.type ?: ButtonType.button
+        disabled = props.disabled ?: false
+        onClick = { props.onClick?.invoke() }
+        
+        css {
+            padding = when (props.size) {
+                "small" -> "6px 12px".unsafeCast<Padding>()
+                "large" -> "12px 24px".unsafeCast<Padding>()
+                else -> "8px 16px".unsafeCast<Padding>()
+            }
+            
+            fontSize = when (props.size) {
+                "small" -> 0.875.rem
+                "large" -> 1.125.rem
+                else -> 1.rem
+            }
+            
+            border = when (props.variant) {
+                "outlined" -> "1px solid ${Colors.borderMedium}".unsafeCast<Border>()
+                else -> None.none
+            }
+            
+            backgroundColor = when (props.variant) {
+                "primary" -> Colors.primary.toColor()
+                "secondary" -> Colors.secondary.toColor()
+                "outlined" -> NamedColor.transparent
+                else -> Colors.primary.toColor()
+            }
+            
+            color = when (props.variant) {
+                "outlined" -> Colors.primary.toColor()
+                else -> NamedColor.white
+            }
+            
+            borderRadius = 4.px
+            cursor = if (props.disabled == true) Cursor.notAllowed else Cursor.pointer
+            fontWeight = FontWeight.medium
+            width = if (props.fullWidth == true) 100.pct else null
+            
+            hover {
+                backgroundColor = when (props.variant) {
+                    "primary" -> Colors.primaryDark.toColor()
+                    "secondary" -> Colors.secondaryDark.toColor()
+                    "outlined" -> "rgba(25, 118, 210, 0.04)".unsafeCast<BackgroundColor>()
+                    else -> Colors.primaryDark.toColor()
+                }
+            }
+            
+            disabled {
+                opacity = 0.5
+                cursor = Cursor.notAllowed
+            }
+        }
+        
+        +props.children.toString()
+    }
+}

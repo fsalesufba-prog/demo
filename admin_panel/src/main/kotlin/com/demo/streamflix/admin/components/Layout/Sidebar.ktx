@@ -1,0 +1,122 @@
+package com.demo.streamflix.admin.components.Layout
+
+import emotion.react.css
+import react.FC
+import react.Props
+import react.dom.html.ReactHTML.aside
+import react.dom.html.ReactHTML.nav
+import react.dom.html.ReactHTML.ul
+import react.dom.html.ReactHTML.li
+import react.dom.html.ReactHTML.a
+import web.cssom.*
+import react.router.useLocation
+import react.router.useNavigate
+
+external interface SidebarProps : Props {
+    var isOpen: Boolean
+    var onClose: () -> Unit
+}
+
+val Sidebar = FC<SidebarProps> { props ->
+    val location = useLocation()
+    val navigate = useNavigate()
+    
+    aside {
+        css {
+            backgroundColor = NamedColor.white
+            borderRight = "1px solid ${Colors.borderLight}".unsafeCast<Border>()
+            width = if (props.isOpen) 250.px else 0.px
+            height = 100.vh
+            position = Position.fixed
+            top = 64.px
+            left = 0.px
+            overflow = Overflow.hidden
+            transition = "width 0.3s ease"
+            zIndex = 99
+            
+            media("(max-width: 768px)") {
+                width = if (props.isOpen) 100.pct else 0.pct
+                position = Position.fixed
+                top = 64.px
+                left = 0.px
+                right = 0.px
+                bottom = 0.px
+            }
+        }
+        
+        if (props.isOpen) {
+            nav {
+                css {
+                    padding = 16.px
+                    height = 100.pct
+                    overflowY = Overflow.auto
+                }
+                
+                ul {
+                    css {
+                        listStyle = ListStyleType.none
+                        padding = 0.px
+                        margin = 0.px
+                    }
+                    
+                    // Menu items
+                    listOf(
+                        MenuItem("Dashboard", "/admin", "📊"),
+                        MenuItem("Usuários", "/admin/users", "👥"),
+                        MenuItem("Canais", "/admin/channels", "📺"),
+                        MenuItem("Categorias", "/admin/categories", "📂"),
+                        MenuItem("Assinaturas", "/admin/subscriptions", "💳"),
+                        MenuItem("Configurações", "/admin/settings", "⚙️")
+                    ).forEach { item ->
+                        li {
+                            css {
+                                marginBottom = 4.px
+                            }
+                            
+                            a {
+                                css {
+                                    display = Display.block
+                                    padding = "12px 16px".unsafeCast<Padding>()
+                                    borderRadius = 4.px
+                                    textDecoration = None.none
+                                    color = if (location.pathname == item.path) {
+                                        Colors.primary.toColor()
+                                    } else {
+                                        Colors.textPrimary.toColor()
+                                    }
+                                    backgroundColor = if (location.pathname == item.path) {
+                                        "rgba(25, 118, 210, 0.08)".unsafeCast<BackgroundColor>()
+                                    } else {
+                                        NamedColor.transparent
+                                    }
+                                    fontWeight = if (location.pathname == item.path) {
+                                        FontWeight.semiBold
+                                    } else {
+                                        FontWeight.normal
+                                    }
+                                    
+                                    hover {
+                                        backgroundColor = if (location.pathname == item.path) {
+                                            "rgba(25, 118, 210, 0.12)".unsafeCast<BackgroundColor>()
+                                        } else {
+                                            Colors.background.toColor()
+                                        }
+                                    }
+                                }
+                                
+                                onClick = {
+                                    navigate(item.path)
+                                    props.onClose()
+                                }
+                                
+                                +"${item.icon} ${item.label}"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+data class MenuItem(val label: String, val path: String, val icon: String)

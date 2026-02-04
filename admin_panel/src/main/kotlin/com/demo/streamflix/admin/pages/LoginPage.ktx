@@ -1,0 +1,124 @@
+package com.demo.streamflix.admin.pages
+
+import emotion.react.css
+import react.FC
+import react.Props
+import react.dom.html.ReactHTML.div
+import react.dom.html.ReactHTML.h1
+import react.dom.html.ReactHTML.form
+import web.cssom.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import react.useState
+import com.demo.streamflix.admin.components.Common.Input
+import com.demo.streamflix.admin.components.Common.Button
+import com.demo.streamflix.admin.services.AuthApiService
+import react.router.useNavigate
+import react.dom.html.ReactHTML.p
+
+external interface LoginPageProps : Props
+
+val LoginPage = FC<LoginPageProps> {
+    val scope = MainScope()
+    val navigate = useNavigate()
+    val authService = AuthApiService()
+    
+    val (username, setUsername) = useState("")
+    val (password, setPassword) = useState("")
+    val (loading, setLoading) = useState(false)
+    val (error, setError) = useState<String?>(null)
+    
+    val handleLogin = {
+        setLoading(true)
+        setError(null)
+        
+        scope.launch {
+            val result = authService.login(username, password)
+            
+            if (result != null) {
+                navigate("/admin")
+            } else {
+                setError("Credenciais inválidas")
+            }
+            
+            setLoading(false)
+        }
+    }
+    
+    div {
+        css {
+            display = Display.flex
+            justifyContent = JustifyContent.center
+            alignItems = AlignItems.center
+            minHeight = 100.vh
+            backgroundColor = Colors.background.toColor()
+            padding = 24.px
+        }
+        
+        div {
+            css {
+                backgroundColor = NamedColor.white
+                borderRadius = 12.px
+                padding = 48.px
+                width = 100.pct
+                maxWidth = 400.px
+                boxShadow = "0 4px 20px rgba(0,0,0,0.1)"
+            }
+            
+            h1 {
+                css {
+                    textAlign = TextAlign.center
+                    marginBottom = 32.px
+                    color = Colors.primary.toColor()
+                }
+                +"Streamflix Admin"
+            }
+            
+            form {
+                onSubmit = { it.preventDefault(); handleLogin() }
+                
+                Input {
+                    value = username
+                    onChange = { setUsername(it) }
+                    label = "Usuário"
+                    placeholder = "Digite seu usuário"
+                    required = true
+                }
+                
+                Input {
+                    value = password
+                    onChange = { setPassword(it) }
+                    label = "Senha"
+                    placeholder = "Digite sua senha"
+                    type = "password"
+                    required = true
+                }
+                
+                if (error != null) {
+                    p {
+                        css {
+                            color = Colors.error.toColor()
+                            fontSize = 0.875.rem
+                            textAlign = TextAlign.center
+                            margin = "16px 0".unsafeCast<Margin>()
+                        }
+                        +error!!
+                    }
+                }
+                
+                Button {
+                    type = react.dom.html.ButtonType.submit
+                    disabled = loading || username.isEmpty() || password.isEmpty()
+                    fullWidth = true
+                    onClick = { handleLogin() }
+                    
+                    if (loading) {
+                        +"Entrando..."
+                    } else {
+                        +"Entrar"
+                    }
+                }
+            }
+        }
+    }
+}

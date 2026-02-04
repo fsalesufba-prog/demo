@@ -1,0 +1,89 @@
+package com.demo.streamflix.admin.components.Common
+
+import emotion.react.css
+import react.ChildrenBuilder
+import react.FC
+import react.Props
+import react.dom.html.ReactHTML.div
+import react.dom.html.ReactHTML.input
+import react.dom.html.ReactHTML.label
+import web.cssom.*
+
+external interface InputProps : Props {
+    var value: String
+    var onChange: (String) -> Unit
+    var label: String?
+    var placeholder: String?
+    var type: String?
+    var error: String?
+    var disabled: Boolean?
+    var required: Boolean?
+}
+
+val Input = FC<InputProps> { props ->
+    div {
+        css {
+            marginBottom = 16.px
+            width = 100.pct
+        }
+        
+        if (!props.label.isNullOrEmpty()) {
+            label {
+                css {
+                    display = Display.block
+                    marginBottom = 4.px
+                    fontSize = 0.875.rem
+                    fontWeight = FontWeight.medium
+                    color = Colors.textPrimary.toColor()
+                }
+                +props.label!!
+                if (props.required == true) {
+                    span {
+                        css {
+                            color = Colors.error.toColor()
+                            marginLeft = 2.px
+                        }
+                        +"*"
+                    }
+                }
+            }
+        }
+        
+        input {
+            value = props.value
+            onChange = { event -> props.onChange(event.target.value) }
+            placeholder = props.placeholder ?: ""
+            type = props.type ?: "text"
+            disabled = props.disabled ?: false
+            
+            css {
+                width = 100.pct
+                padding = 12.px
+                border = "1px solid ${if (props.error != null) Colors.error else Colors.borderMedium}".unsafeCast<Border>()
+                borderRadius = 4.px
+                fontSize = 1.rem
+                backgroundColor = if (props.disabled == true) Colors.background.toColor() else NamedColor.white
+                
+                focus {
+                    outline = None.none
+                    border = "2px solid ${Colors.primary}".unsafeCast<Border>()
+                }
+                
+                disabled {
+                    cursor = Cursor.notAllowed
+                }
+            }
+        }
+        
+        if (!props.error.isNullOrEmpty()) {
+            div {
+                css {
+                    color = Colors.error.toColor()
+                    fontSize = 0.75.rem
+                    marginTop = 4.px
+                }
+                +props.error!!
+            }
+        }
+    }
+}

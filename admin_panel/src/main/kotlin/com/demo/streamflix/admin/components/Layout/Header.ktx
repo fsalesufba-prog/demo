@@ -1,0 +1,95 @@
+package com.demo.streamflix.admin.components.Layout
+
+import emotion.react.css
+import react.FC
+import react.Props
+import react.dom.html.ReactHTML.div
+import react.dom.html.ReactHTML.header
+import react.dom.html.ReactHTML.h1
+import react.dom.html.ReactHTML.button
+import web.cssom.*
+import kotlinx.js.jso
+import com.demo.streamflix.admin.components.Common.Button
+
+external interface HeaderProps : Props {
+    var onMenuClick: () -> Unit
+    var onLogout: () -> Unit
+    var userName: String?
+}
+
+val Header = FC<HeaderProps> { props ->
+    header {
+        css {
+            backgroundColor = NamedColor.white
+            borderBottom = "1px solid ${Colors.borderLight}".unsafeCast<Border>()
+            padding = "0 24px".unsafeCast<Padding>()
+            height = 64.px
+            display = Display.flex
+            alignItems = AlignItems.center
+            justifyContent = JustifyContent.spaceBetween
+            position = Position.sticky
+            top = 0.px
+            zIndex = 100
+        }
+        
+        div {
+            css {
+                display = Display.flex
+                alignItems = AlignItems.center
+                gap = 16.px
+            }
+            
+            button {
+                css {
+                    background = None.none
+                    border = None.none
+                    fontSize = 1.5.rem
+                    cursor = Cursor.pointer
+                    padding = 8.px
+                    borderRadius = 4.px
+                    
+                    hover {
+                        backgroundColor = Colors.background.toColor()
+                    }
+                }
+                onClick = { props.onMenuClick() }
+                +"☰"
+            }
+            
+            h1 {
+                css {
+                    fontSize = 1.25.rem
+                    fontWeight = FontWeight.bold
+                    margin = 0.px
+                    color = Colors.primary.toColor()
+                }
+                +"Streamflix Admin"
+            }
+        }
+        
+        div {
+            css {
+                display = Display.flex
+                alignItems = AlignItems.center
+                gap = 16.px
+            }
+            
+            if (!props.userName.isNullOrEmpty()) {
+                div {
+                    css {
+                        color = Colors.textSecondary.toColor()
+                        fontSize = 0.875.rem
+                    }
+                    +"Olá, ${props.userName}"
+                }
+            }
+            
+            Button {
+                size = "small"
+                variant = "outlined"
+                onClick = { props.onLogout() }
+                +"Sair"
+            }
+        }
+    }
+}

@@ -1,0 +1,167 @@
+# Gradle
+.gradle/
+build/
+out/
+bin/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.vscode/
+*.swp
+*.swo
+
+# Build output
+target/
+!maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Logs
+*.log
+logs/
+!**/src/main/**/logs/
+!**/src/test/**/logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database
+*.db
+*.sqlite
+*.h2.db
+
+# Docker
+docker-data/
+*.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Application
+application.properties
+application-dev.properties
+application-prod.properties
+!**/src/main/resources/application*.yml
+!**/src/main/resources/application*.properties
+
+# Keys and certificates
+*.keystore
+*.truststore
+*.p12
+*.pem
+*.crt
+*.key
+
+# Backend
+backend/.gradle/
+backend/build/
+backend/out/
+backend/bin/
+backend/*.jar
+
+# Android
+android_app/.gradle/
+android_app/.idea/
+android_app/build/
+android_app/app/build/
+android_app/*.iml
+android_app/app/*.iml
+android_app/local.properties
+android_app/captures/
+android_app/*.hprof
+
+# Node/Admin Panel
+admin_panel/node_modules/
+admin_panel/.npm
+admin_panel/.env
+admin_panel/dist/
+admin_panel/build/
+admin_panel/.cache
+admin_panel/.parcel-cache
+admin_panel/.yarn/cache
+admin_panel/.yarn/unplugged
+admin_panel/.yarn/build-state.yml
+admin_panel/.yarn/install-state.gz
+admin_panel/.pnp.*
+admin_panel/*.log
+
+# Temp files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Coverage
+coverage/
+*.lcov
+*.coverage
+*.coverage.*
+
+# Profiling
+*.prof
+*.prof.*
+
+# Mobile specific
+android_app/app/src/main/assets/debug.keystore
+android_app/app/src/main/assets/release.keystore
+android_app/app/src/main/res/raw/channel_streams.json
+
+# Secrets
+secrets/
+credentials/
+passwords/
+*.secret
+*.credential
+
+# Documentation
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Desktop.ini
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+
+# Linux
+*~
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Test reports
+**/test-results/
+**/reports/
+**/test-report.html
+
+# Sonar
+.sonar/
+sonar-project.properties
+
+# Flyway
+**/src/main/resources/db/migration/*.sql.bak
+
+# Images cache
+**/static/images/cache/
+
+# Uploads
+uploads/
+**/uploads/

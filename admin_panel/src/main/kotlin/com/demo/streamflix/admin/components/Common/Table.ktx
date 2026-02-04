@@ -1,0 +1,124 @@
+package com.demo.streamflix.admin.components.Common
+
+import emotion.react.css
+import react.ChildrenBuilder
+import react.FC
+import react.Props
+import react.dom.html.ReactHTML.div
+import react.dom.html.ReactHTML.table
+import react.dom.html.ReactHTML.thead
+import react.dom.html.ReactHTML.tbody
+import react.dom.html.ReactHTML.tr
+import react.dom.html.ReactHTML.th
+import react.dom.html.ReactHTML.td
+import web.cssom.*
+import kotlinx.js.jso
+
+external interface TableProps<T> : Props {
+    var data: List<T>
+    var columns: List<ColumnDefinition<T>>
+    var onRowClick: ((T) -> Unit)?
+    var loading: Boolean?
+}
+
+data class ColumnDefinition<T>(
+    val key: String,
+    val title: String,
+    val render: (T) -> String
+)
+
+val Table = FC<TableProps<Any>> { props ->
+    div {
+        css {
+            overflowX = Overflow.auto
+            borderRadius = 8.px
+            border = "1px solid ${Colors.borderLight}".unsafeCast<Border>()
+            backgroundColor = NamedColor.white
+        }
+        
+        table {
+            css {
+                width = 100.pct
+                borderCollapse = BorderCollapse.collapse
+            }
+            
+            thead {
+                tr {
+                    css {
+                        backgroundColor = Colors.background.toColor()
+                    }
+                    
+                    props.columns.forEach { column ->
+                        th {
+                            css {
+                                padding = 16.px
+                                textAlign = TextAlign.left
+                                borderBottom = "1px solid ${Colors.borderLight}".unsafeCast<Border>()
+                                fontWeight = FontWeight.semiBold
+                                fontSize = 0.875.rem
+                                color = Colors.textSecondary.toColor()
+                            }
+                            +column.title
+                        }
+                    }
+                }
+            }
+            
+            tbody {
+                if (props.loading == true) {
+                    tr {
+                        td {
+                            attrs.colSpan = props.columns.size
+                            css {
+                                padding = 40.px
+                                textAlign = TextAlign.center
+                                color = Colors.textDisabled.toColor()
+                            }
+                            +"Carregando..."
+                        }
+                    }
+                } else if (props.data.isEmpty()) {
+                    tr {
+                        td {
+                            attrs.colSpan = props.columns.size
+                            css {
+                                padding = 40.px
+                                textAlign = TextAlign.center
+                                color = Colors.textDisabled.toColor()
+                            }
+                            +"Nenhum dado encontrado"
+                        }
+                    }
+                } else {
+                    props.data.forEachIndexed { index, item ->
+                        tr {
+                            css {
+                                cursor = if (props.onRowClick != null) Cursor.pointer else Cursor.default
+                                
+                                hover {
+                                    backgroundColor = "rgba(0, 0, 0, 0.02)".unsafeCast<BackgroundColor>()
+                                }
+                            }
+                            
+                            onClick = { props.onRowClick?.invoke(item) }
+                            
+                            props.columns.forEach { column ->
+                                td {
+                                    css {
+                                        padding = 16.px
+                                        borderBottom = if (index < props.data.size - 1) {
+                                            "1px solid ${Colors.borderLight}".unsafeCast<Border>()
+                                        } else {
+                                            None.none
+                                        }
+                                    }
+                                    +column.render(item)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

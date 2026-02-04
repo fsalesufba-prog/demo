@@ -1,0 +1,12 @@
+{
+  "name": "streamflix-admin",
+  "version": "1.0.0",
+  "description": "Painel de administração Streamflix",
+  "scripts": {
+    "start": "gradle browserRun",
+    "build": "gradle build",
+    "deploy": "gradle browserProductionWebpack"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

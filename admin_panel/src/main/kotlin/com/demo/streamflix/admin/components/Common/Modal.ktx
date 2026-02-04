@@ -1,0 +1,116 @@
+package com.demo.streamflix.admin.components.Common
+
+import emotion.react.css
+import react.ChildrenBuilder
+import react.FC
+import react.Props
+import react.dom.html.ReactHTML.div
+import react.dom.html.ReactHTML.h2
+import web.cssom.*
+import react.dom.html.ReactHTML.button
+
+external interface ModalProps : Props {
+    var isOpen: Boolean
+    var onClose: () -> Unit
+    var title: String?
+    var children: react.ReactNode
+}
+
+val Modal = FC<ModalProps> { props ->
+    if (props.isOpen) {
+        div {
+            css {
+                position = Position.fixed
+                top = 0.px
+                left = 0.px
+                right = 0.px
+                bottom = 0.px
+                backgroundColor = "rgba(0, 0, 0, 0.5)".unsafeCast<BackgroundColor>()
+                display = Display.flex
+                justifyContent = JustifyContent.center
+                alignItems = AlignItems.center
+                zIndex = 1000
+            }
+            
+            onClick = { props.onClose() }
+            
+            div {
+                css {
+                    backgroundColor = NamedColor.white
+                    borderRadius = 8.px
+                    width = 90.pct
+                    maxWidth = 500.px
+                    maxHeight = 90.vh
+                    overflow = Overflow.auto
+                    boxShadow = "0 4px 20px rgba(0,0,0,0.15)"
+                }
+                
+                onClick = { it.stopPropagation() }
+                
+                // Header
+                div {
+                    css {
+                        padding = 24.px
+                        borderBottom = "1px solid ${Colors.borderLight}".unsafeCast<Border>()
+                        display = Display.flex
+                        justifyContent = JustifyContent.spaceBetween
+                        alignItems = AlignItems.center
+                    }
+                    
+                    h2 {
+                        css {
+                            fontSize = 1.5.rem
+                            fontWeight = FontWeight.semiBold
+                            margin = 0.px
+                        }
+                        +(props.title ?: "")
+                    }
+                    
+                    button {
+                        css {
+                            background = None.none
+                            border = None.none
+                            fontSize = 1.5.rem
+                            cursor = Cursor.pointer
+                            color = Colors.textSecondary.toColor()
+                            padding = 4.px
+                            
+                            hover {
+                                color = Colors.textPrimary.toColor()
+                            }
+                        }
+                        onClick = { props.onClose() }
+                        +"×"
+                    }
+                }
+                
+                // Content
+                div {
+                    css {
+                        padding = 24.px
+                    }
+                    child(props.children)
+                }
+                
+                // Footer
+                div {
+                    css {
+                        padding = "16px 24px".unsafeCast<Padding>()
+                        borderTop = "1px solid ${Colors.borderLight}".unsafeCast<Border>()
+                        display = Display.flex
+                        justifyContent = FlexEnd
+                        gap = 12.px
+                    }
+                    
+                    Button {
+                        variant = "outlined"
+                        onClick = { props.onClose() }
+                        +"Cancelar"
+                    }
+                    
+                    // Aqui você pode adicionar botões de ação adicionais
+                }
+            }
+        }
+    }
+}

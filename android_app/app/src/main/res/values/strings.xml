@@ -1,0 +1,25 @@
+<!-- Adicionar ao arquivo existente -->
+
+<!-- Player -->
+<string name="loading_stream">Cargando transmisión...</string>
+<string name="player_error">Error al cargar el canal</string>
+<string name="favorite">Favorito</string>
+<string name="fullscreen">Pantalla completa</string>
+<string name="back">Volver</string>
+
+<!-- Categories -->
+<string name="category_all">Todos</string>
+<string name="category_national">Nacional</string>
+<string name="category_current">Actualidad</string>
+<string name="category_kids">Infantil</string>
+<string name="category_regional">Regional</string>
+<string name="category">Categoría</string>
+<string name="channel_logo">Logo del canal</string>
+<string name="clear">Limpiar</string>
+
+<!-- Channel Details -->
+<string name="channel_description">Descripción</string>
+<string name="channel_hd">HD</string>
+<string name="watch_now">Ver Ahora</string>
+<string name="add_to_favorites">Agregar a favoritos</string>
+<string name="remove_from_favorites">Quitar de favoritos</string>
