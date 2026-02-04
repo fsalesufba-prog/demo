@@ -7,6 +7,9 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.annotation.EnableScheduling
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 @SpringBootApplication
 @EnableScheduling
@@ -16,9 +19,6 @@ fun main(args: Array<String>) {
     runApplication<DemoStreamflixApplication>(*args)
 }
 
-/**
- * Bean de inicialização para verificar status da aplicação
- */
 @Configuration
 class AppConfig {
 
@@ -31,21 +31,20 @@ class AppConfig {
             ============================================
               DEMO StreamFlix Backend Iniciado
             ============================================
-            🚀  Aplicação: DEMO StreamFlix
-            📅  Data: ${java.time.LocalDateTime.now()}
-            🔐  Modo: ${System.getenv("SPRING_PROFILES_ACTIVE") ?: "default"}
+            Aplicacao: DEMO StreamFlix
+            Data: ${java.time.LocalDateTime.now()}
+            Modo: ${System.getenv("SPRING_PROFILES_ACTIVE") ?: "default"}
             ============================================
             
-            Endpoints disponíveis:
+            Endpoints disponiveis:
             - API: http://localhost:8080/api
             - Swagger: http://localhost:8080/swagger-ui.html
             - Health: http://localhost:8080/api/health
             
-            Inicializando categorias padrão...
+            Inicializando categorias padrao...
             ============================================
             """.trimIndent())
             
-            // Inicializar categorias padrão
             categoryService.initializeDefaultCategories()
             
             println("Categorias inicializadas com sucesso!")
@@ -54,9 +53,6 @@ class AppConfig {
     }
 }
 
-/**
- * Controller de health check simples
- */
 @RestController
 @RequestMapping("/api")
 class HealthController {
@@ -78,11 +74,11 @@ class HealthController {
             "description" to "Backend para aplicativo de streaming de TV peruana",
             "author" to "Equipe DEMO",
             "features" to listOf(
-                "Autenticação JWT",
-                "Gestão de usuários",
-                "Catálogo de canais TV peruana",
+                "Autenticacao JWT",
+                "Gestao de usuarios",
+                "Catalogo de canais TV peruana",
                 "Busca de canais",
-                "Validação de membresía"
+                "Validacao de membresia"
             ),
             "categories" to listOf("Nacional", "Actualidad", "Infantil", "Regional")
         )

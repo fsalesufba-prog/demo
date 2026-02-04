@@ -7,6 +7,9 @@
     "build": "gradle build",
     "deploy": "gradle browserProductionWebpack"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {},
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

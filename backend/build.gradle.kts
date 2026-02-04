@@ -30,10 +30,9 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     
-    // Database
-    implementation("mysql:mysql-connector-java:8.0.33")
+    // Database - PostgreSQL instead of MySQL
+    implementation("org.postgresql:postgresql:42.7.1")
     implementation("org.flywaydb:flyway-core")
-    implementation("org.flywaydb:flyway-mysql")
     
     // JWT
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
@@ -70,7 +69,6 @@ tasks.bootBuildImage {
     builder.set("paketobuildpacks/builder-jammy-base:latest")
 }
 
-// Configuração para melhor performance
 tasks.register("configureBuild") {
     dependsOn("clean", "build")
     doLast {

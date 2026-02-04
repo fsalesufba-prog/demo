@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamflix Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #ffffff;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e94560;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        
+        .nav-links a:hover {
+            opacity: 1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-title {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e94560;
+        }
+        
+        .card-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.6;
+            margin-top: 0.5rem;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .table th {
+            opacity: 0.7;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            color: #4ade80;
+        }
+        
+        .status-inactive {
+            color: #f87171;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .btn-primary {
+            background: #e94560;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+        }
+        
+        .status-dot.offline {
+            background: #f87171;
+        }
+        
+        #api-status-text {
+            font-size: 0.875rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            opacity: 0.6;
+            font-size: 0.875rem;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #e94560;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Streamflix Admin</div>
+        <nav class="nav-links">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#channels">Canais</a>
+            <a href="#categories">Categorias</a>
+            <a href="#users">Usuarios</a>
+        </nav>
+        <div class="api-status">
+            <div class="status-dot" id="status-dot"></div>
+            <span id="api-status-text">Verificando...</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h1 style="margin: 2rem 0;">Dashboard</h1>
+        
+        <div class="dashboard">
+            <div class="card">
+                <div class="card-title">Total de Canais</div>
+                <div class="card-value" id="total-channels">--</div>
+                <div class="card-subtitle">Canais de TV disponiveis</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Categorias</div>
+                <div class="card-value" id="total-categories">--</div>
+                <div class="card-subtitle">Nacional, Actualidad, etc.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Usuarios Ativos</div>
+                <div class="card-value" id="total-users">--</div>
+                <div class="card-subtitle">Usuarios com assinatura</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Status do Sistema</div>
+                <div class="card-value status-active" id="system-status">Online</div>
+                <div class="card-subtitle">Todos os servicos funcionando</div>
+            </div>
+        </div>
+        
+        <div class="section" id="channels">
+            <h2 class="section-title">Canais Recentes</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Numero</th>
+                        <th>Nome</th>
+                        <th>Categoria</th>
+                        <th>HD</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="channels-table">
+                    <tr>
+                        <td>001</td>
+                        <td>Willax HD</td>
+                        <td>Nacional</td>
+                        <td>Sim</td>
+                        <td class="status-active">Ativo</td>
+                    </tr>
+                    <tr>
+                        <td>002</td>
+                        <td>Latina HD</td>
+                        <td>Nacional</td>
+                        <td>Sim</td>
+                        <td class="status-active">Ativo</td>
+                    </tr>
+                    <tr>
+                        <td>003</td>
+                        <td>RPP</td>
+                        <td>Nacional</td>
+                        <td>Nao</td>
+                        <td class="status-active">Ativo</td>
+                    </tr>
+                    <tr>
+                        <td>004</td>
+                        <td>America HD</td>
+                        <td>Nacional</td>
+                        <td>Sim</td>
+                        <td class="status-active">Ativo</td>
+                    </tr>
+                    <tr>
+                        <td>005</td>
+                        <td>Panamericana HD</td>
+                        <td>Nacional</td>
+                        <td>Sim</td>
+                        <td class="status-active">Ativo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="section" id="categories">
+            <h2 class="section-title">Categorias</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Slug</th>
+                        <th>Canais</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nacional</td>
+                        <td>nacional</td>
+                        <td>6</td>
+                        <td class="status-active">Ativo</td>
+                    </tr>
+                    <tr>
+                        <td>Actualidad</td>
+                        <td>actualidad</td>
+                        <td>4</td>
+                        <td class="status-active">Ativo</td>
+                    </tr>
+                    <tr>
+                        <td>Infantil</td>
+                        <td>infantil</td>
+                        <td>3</td>
+                        <td class="status-active">Ativo</td>
+                    </tr>
+                    <tr>
+                        <td>Regional</td>
+                        <td>regional</td>
+                        <td>5</td>
+                        <td class="status-active">Ativo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>Streamflix Admin Panel - DEMO Version</p>
+        <p>Backend API: Spring Boot + Kotlin | Frontend: Express.js</p>
+    </footer>
+    
+    <script>
+        async function checkApiStatus() {
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('api-status-text');
+            
+            try {
+                const response = await fetch('/api/health');
+                if (response.ok) {
+                    statusDot.classList.remove('offline');
+                    statusText.textContent = 'API Online';
+                } else {
+                    statusDot.classList.add('offline');
+                    statusText.textContent = 'API Offline';
+                }
+            } catch (error) {
+                statusDot.classList.remove('offline');
+                statusText.textContent = 'Frontend OK';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            checkApiStatus();
+            setInterval(checkApiStatus, 30000);
+            
+            document.getElementById('total-channels').textContent = '18';
+            document.getElementById('total-categories').textContent = '4';
+            document.getElementById('total-users').textContent = '2';
+        });
+    </script>
+</body>
+</html>
